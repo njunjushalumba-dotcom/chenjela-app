@@ -1,67 +1,68 @@
-// --- THE KEY MANAGER ---
-let API_KEY = localStorage.getItem('chenjela_key');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chenjela AI 🇿🇲</title>
+    <style>
+        body { background-color: #003366; color: white; font-family: sans-serif; margin: 0; padding-bottom: 60px; }
+        .nav-bar { background: #002244; padding: 10px; display: flex; justify-content: space-around; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #FFD700; }
+        .nav-item { color: #FFD700; text-decoration: none; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .page { display: none; padding: 20px; text-align: center; }
+        .active-page { display: block; }
+        #chat-container { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; min-height: 250px; margin: 20px auto; width: 90%; overflow-y: auto; text-align: left; border: 1px solid #555; }
+        input { width: 80%; padding: 12px; border-radius: 5px; border: none; font-size: 16px; margin-bottom: 10px; }
+        button { background: #FFD700; color: #003366; padding: 12px 25px; border: none; border-radius: 5px; font-weight: bold; width: 85%; cursor: pointer; margin-top: 10px; }
+        .price-card { background: white; color: #333; margin: 15px auto; padding: 15px; border-radius: 10px; border-left: 5px solid #FFD700; width: 90%; text-align: left; }
+        .premium-btn { background: #003366; color: white; margin-top: 5px; }
+    </style>
+</head>
+<body>
 
-if (window.location.search.includes('reset=true')) {
-    localStorage.removeItem('chenjela_key');
-    API_KEY = null;
-}
+    <div class="nav-bar">
+        <span class="nav-item" onclick="showPage('home')">AI ASSIST</span>
+        <span class="nav-item" onclick="showPage('syllabus')">SYLLABUS</span>
+        <span class="nav-item" onclick="showPage('pricing')">UPGRADE</span>
+    </div>
 
-if (!API_KEY) {
-    API_KEY = prompt("Enter your Google API Key to activate Chenjela:");
-    if (API_KEY) {
-        localStorage.setItem('chenjela_key', API_KEY.trim());
-    }
-}
+    <div id="home" class="page active-page">
+        <h1 style="color: #FFD700;">Teacher Chenjela</h1>
+        <p>Zambian CBC Expert (Form 1-4 & Gr 10-12)</p>
+        <div id="chat-container">
+            <div id="responseArea">Welcome, Teacher. Ask me to draft a lesson plan or explain a CBC topic...</div>
+        </div>
+        <input type="text" id="userInput" placeholder="Type your question here...">
+        <button id="sendBtn">Send Question</button>
+    </div>
 
-// --- NAVIGATION LOGIC ---
-function showPage(pageId) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
-    document.getElementById(pageId).classList.add('active-page');
-}
+    <div id="syllabus" class="page">
+        <h2 style="color: #FFD700;">Zambian Curriculum</h2>
+        <div style="text-align: left; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
+            <p>📚 <b>Senior Secondary:</b> Grade 10-12 (Old Syllabus).</p>
+            <p>📚 <b>Junior Secondary:</b> Form 1-4 (New CBC Curriculum).</p>
+            <p><i>Note: Premium members get access to downloadable schemes of work.</i></p>
+        </div>
+        <button onclick="showPage('pricing')">Upgrade for Full Access</button>
+    </div>
 
-// --- THE AI ENGINE ---
-async function askAI() {
-    const inputField = document.getElementById('userInput');
-    const responseArea = document.getElementById('responseArea');
-    const userInput = inputField.value;
-
-    if (!userInput) return;
-    if (!API_KEY) {
-        alert("Enter your key first!");
-        return;
-    }
-
-    responseArea.innerHTML = "Consulting the Zambian CBC Syllabus... 🇿🇲";
-
-    try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+    <div id="pricing" class="page">
+        <h2 style="color: #FFD700;">Membership Tiers</h2>
         
-        const response = await fetch(url, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                contents: [{ 
-                    parts: [{ 
-                        text: `Context: Zambian Teacher Assistant. Use Grade 10-12 old syllabus and Form 1-4 CBC. Mention Zambian locations/Kwacha. User: ${userInput}` 
-                    }] 
-                }]
-            })
-        });
+        <div class="price-card">
+            <h3>Standard (K150/mo)</h3>
+            <p>Unlimited AI + Lesson Plans.</p>
+            <button onclick="alert('AIRTEL: +260974192798 \nMTN: +260968822006 \nName: Precious Shalumba')">View Payment Info</button>
+            <button class="premium-btn" onclick="window.open('https://wa.me/260974192798?text=I%20have%20paid%20K150%20for%20Chenjela%20Standard')">Send Proof (WhatsApp)</button>
+            <button class="premium-btn" onclick="checkCode()" style="background: #28a745;">Activate with Code</button>
+        </div>
 
-        const data = await response.json();
+        <div class="price-card">
+            <h3>Premium (K300/mo)</h3>
+            <p>Teacher + Parent Portal Access.</p>
+            <button onclick="window.open('https://wa.me/260974192798?text=Interested%20in%20Premium%20Plan')">Contact for Premium</button>
+        </div>
+    </div>
 
-        if (data.error) {
-            responseArea.innerHTML = "⚠️ API Error. Please check your key.";
-        } else {
-            const aiText = data.candidates[0].content.parts[0].text;
-            responseArea.innerHTML = aiText.replace(/\n/g, '<br>');
-            inputField.value = ""; 
-        }
-
-    } catch (error) {
-        responseArea.innerHTML = "⚠️ Connection error. Check your signal.";
-    }
-}
-
-// Connect the main Send button
-document.getElementById('sendBtn').onclick = askAI;
+    <script src="app.js?v=4"></script>
+</body>
+</html>
