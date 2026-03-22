@@ -2,227 +2,70 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Chenjela - Zambia's #1 Study Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #f5b400; --dark-bg: #0a0f1e; --card-bg: #1a2b4a; --text-muted: #8899bb; --green: #2ecc71; }
-        body { margin: 0; font-family: 'Outfit', sans-serif; background: var(--dark-bg); color: white; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        :root { --gold: #f5b400; --dark-bg: #0a0f1e; --card-bg: #1a2b4a; }
+        body { margin: 0; font-family: sans-serif; background: var(--dark-bg); color: white; padding: 10px; line-height: 1.6; }
         
-        header { padding: 15px; text-align: center; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { font-size: 26px; font-weight: 700; color: var(--gold); }
+        /* HEADER */
+        header { text-align: center; padding: 20px 10px; border-bottom: 2px solid var(--gold); margin-bottom: 20px; }
+        .logo { font-size: 28px; font-weight: bold; color: var(--gold); margin: 0; }
         
-        .nav-bar { display: flex; overflow-x: auto; padding: 10px; gap: 8px; background: #0d162d; border-bottom: 1px solid #2a5298; scrollbar-width: none; }
-        .pill { background: var(--card-bg); border: 1px solid #2a5298; color: white; padding: 8px 16px; border-radius: 20px; font-size: 11px; white-space: nowrap; cursor: pointer; }
-        .pill.active { background: var(--gold); color: var(--dark-bg); border: none; font-weight: 600; }
+        /* CARDS */
+        .chenjela-card { background: var(--card-bg); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #2a3e5a; }
+        h2, h3 { color: var(--gold); margin-top: 0; }
 
-        #container { flex: 1; overflow-y: auto; padding: 20px; }
-        .view { display: none; }
-        .view.active { display: block; }
+        /* INPUTS & BUTTONS */
+        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #415a77; background: #0d1b2a; color: white; box-sizing: border-box; font-size: 16px; }
+        button { width: 100%; padding: 15px; margin-top: 10px; border-radius: 8px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; }
+        .btn-primary { background: var(--gold); color: var(--dark-bg); }
+        .btn-whatsapp { background: #25D366; color: white; }
 
-        /* Dashboard Styles */
-        .stat-card { background: var(--card-bg); padding: 15px; border-radius: 12px; margin-bottom: 10px; border-left: 4px solid var(--gold); }
-        .progress-bar { height: 8px; background: #333; border-radius: 4px; margin-top: 10px; overflow: hidden; }
-        .progress-fill { height: 100%; background: var(--gold); width: 65%; }
-
-        /* Chat Styles */
-        .message-wrapper { display: flex; flex-direction: column; gap: 5px; margin-bottom: 15px; }
-        .message { padding: 12px 16px; border-radius: 15px; max-width: 85%; font-size: 14px; line-height: 1.5; }
-        .assistant { background: var(--card-bg); align-self: flex-start; border-bottom-left-radius: 2px; }
-        .user { background: var(--gold); color: var(--dark-bg); align-self: flex-end; border-bottom-right-radius: 2px; }
-        .save-btn { font-size: 10px; color: var(--gold); cursor: pointer; background: none; border: 1px solid var(--gold); padding: 2px 8px; border-radius: 10px; align-self: flex-start; margin: 2px 0 0 5px; }
-
-        .input-area { padding: 15px; display: flex; gap: 10px; background: #0d162d; border-top: 1px solid rgba(255,255,255,0.1); }
-        input { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #2a5298; background: var(--card-bg); color: white; outline: none; }
-        button.send { background: var(--gold); border: none; padding: 0 20px; border-radius: 10px; font-weight: 600; cursor: pointer; color: var(--dark-bg); }
+        /* PRICING STACK */
+        .tier { border: 1px solid #415a77; padding: 15px; border-radius: 10px; margin-top: 15px; background: rgba(255,255,255,0.05); }
+        .price { font-size: 24px; font-weight: bold; color: #4ade80; }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo">Chenjela.</div>
-    <div style="font-size: 11px; color: var(--text-muted);">Zambian CBC & O-Level Hub</div>
-</header>
+    <header>
+        <p class="logo">Chenjela.</p>
+        <small>Zambian CBC & O-Level Hub</small>
+    </header>
 
-<div class="nav-bar">
-    <div class="pill active" onclick="switchTab(this, 'study')">Study Chat</div>
-    <div class="pill" onclick="switchTab(this, 'library')">My Library 📚</div>
-    <div class="pill" onclick="switchTab(this, 'teacher')">Teacher Portal 👨‍🏫</div>
-    <div class="pill" onclick="switchTab(this, 'parent')">Parent Portal 👨‍👩‍👧</div>
-    <div class="pill" onclick="switchTab(this, 'pricing')" style="color:var(--gold)">Upgrade ⚡</div>
-</div>
+    <div class="chenjela-card">
+        <h3>Ask Teacher Chenjela</h3>
+        <input type="text" id="userInput" placeholder="Ask about Math, Science, or CBC...">
+        <button class="btn-primary" onclick="alert('Sending to AI...')">Send Question</button>
+    </div>
 
-<div id="container">
-    <div id="study" class="view active">
-        <div id="chat-box">
-            <div class="message assistant">Muli bwanji! I am the Chenjela AI. Ask me any question from the Zambian syllabus!</div>
+    <div class="chenjela-card">
+        <h3>Teacher's Grid</h3>
+        <p>Generate CBC Schemes of Work instantly.</p>
+        <input type="text" id="topicInput" placeholder="Topic (e.g. Integers Form 1)">
+        <button class="btn-primary" style="background: #3a86ff; color: white;">Generate Grid</button>
+    </div>
+
+    <div class="chenjela-card">
+        <h3>Choose Your Plan</h3>
+        
+        <div class="tier">
+            <strong>Basic</strong>
+            <p class="price">K0</p>
+            <small>5 Questions/Day • Old Syllabus</small>
+        </div>
+
+        <div class="tier" style="border-color: var(--gold);">
+            <strong>Premium</strong>
+            <p class="price">K150/mo</p>
+            <small>Unlimited AI • CBC Grids • Parent Reports</small>
+            <a href="https://wa.me/260971234567?text=Hi!%20I%20want%20to%20activate%20Chenjela%20Premium" style="text-decoration:none;">
+                <button class="btn-whatsapp">Pay via Mobile Money</button>
+            </a>
         </div>
     </div>
 
-    <div id="library" class="view">
-        <h3 style="color:var(--gold)">Your Saved Lessons</h3>
-        <div id="lib-list"><p>No saved lessons yet.</p></div>
-    </div>
-
-    <div id="teacher" class="view">
-        <h3 style="color:var(--gold)">Teacher Dashboard</h3>
-        <div class="stat-card">
-            <strong>Upload Class Notes</strong><br>
-            <small>Share PDFs or notes with your students.</small>
-            <button class="pill" style="margin-top:10px; display:block">Select File</button>
-        </div>
-        <div class="stat-card">
-            <strong>Student Engagement</strong><br>
-            <small>Active Students: 42</small>
-        </div>
-    </div>
-
-    <div id="parent" class="view">
-        <h3 style="color:var(--gold)">Parent Progress Report</h3>
-        <div class="stat-card">
-            <strong>Learning Path: Form 2</strong>
-            <div class="progress-bar"><div class="progress-fill"></div></div>
-            <p style="font-size:11px; margin-top:5px">65% of Syllabus covered this term.</p>
-        </div>
-        <div class="stat-card">
-            <strong>Top Subject:</strong> Agricultural Science
-        </div>
-    </div>
-
-    <div id="pricing" class="view">
-        <h3 style="color:var(--gold)">Choose Your Plan</h3>
-        <div class="stat-card" style="border: 2px solid var(--gold)">
-            <h2 style="margin:0">Premium</h2>
-            <p>K120/Month</p>
-            <ul style="font-size:12px; padding-left:15px">
-                <li>Unlimited AI Chat</li>
-                <li>Voice Lessons</li>
-                <li>Full Parent/Teacher Dashboard</li>
-            </ul>
-            <button class="pill active" style="width:100%">Pay via MTN/Airtel</button>
-        </div>
-    </div>
-</div>
-
-<div class="input-area" id="input-zone">
-    <input type="text" id="userInput" placeholder="Ask anything...">
-    <button class="send" onclick="askAI()">Send</button>
-</div>
-
-<script>
-    // --- 1. SETTINGS: PASTE YOUR API KEY HERE ---
-    const API_KEY = "PASTE_YOUR_GEMINI_API_KEY_HERE"; 
-
-    let saved = JSON.parse(localStorage.getItem('chenjela_lib')) || [];
-
-    function switchTab(el, id) {
-        document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
-        el.classList.add('active');
-        document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-        document.getElementById('input-zone').style.display = (id === 'study') ? 'flex' : 'none';
-        if(id === 'library') renderLib();
-    }
-
-    async function askAI() {
-        const input = document.getElementById('userInput');
-        const chat = document.getElementById('chat-box');
-        if (!input.value.trim()) return;
-
-        const question = input.value;
-        addMsg(question, 'user');
-        input.value = "";
-
-        // The "Real Brain" Call
-        try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ contents: [{ parts: [{ text: "Explain this for a Zambian school student: " + question }] }] })
-            });
-            const data = await response.json();
-            const answer = data.candidates[0].content.parts[0].text;
-            addMsg(answer, 'assistant', question);
-        } catch (e) {
-            addMsg("Connect your API Key in the code to get real answers!", 'assistant');
-        }
-    }
-
-    function addMsg(text, role, q = "") {
-        const chat = document.getElementById('chat-box');
-        const wrap = document.createElement('div');
-        wrap.className = 'message-wrapper';
-        let html = `<div class="message ${role}">${text}</div>`;
-        if(role === 'assistant' && q) {
-            html += `<button class="save-btn" onclick="save('${q.replace(/'/g,"")}', '${text.replace(/'/g,"")}')">Save Lesson</button>`;
-        }
-        wrap.innerHTML = html;
-        chat.appendChild(wrap);
-        document.getElementById('container').scrollTop = document.getElementById('container').scrollHeight;
-    }
-
-    function save(q, a) {
-        saved.push({q, a});
-        localStorage.setItem('chenjela_lib', JSON.stringify(saved));
-        alert("Lesson Saved!");
-    }
-
-    function renderLib() {
-        const list = document.getElementById('lib-list');
-        list.innerHTML = saved.length ? saved.map(i => `<div class="stat-card"><strong>Q: ${i.q}</strong><p style="font-size:13px">${i.a}</p></div>`).join('') : "No lessons saved.";
-    }
-</script>
-  <style>
-    .chenjela-card { background: white; padding: 20px; border-radius: 12px; margin: 15px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #ddd; }
-    .price-tag { font-size: 24px; color: #28a745; font-weight: bold; }
-    .tier-box { border: 2px solid #eee; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
-    .premium-gold { border-color: #ffc107; background-color: #fffdf5; }
-    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background-color: #f8f9fa; }
-  </style>
-
-  <div class="chenjela-card">
-    <h2>Choose Your Plan</h2>
-    <div class="tier-box">
-      <strong>Basic (Free)</strong><br>
-      <small>5 Questions/Day • Old Syllabus</small>
-      <p class="price-tag">K0</p>
-    </div>
-    <div class="tier-box premium-gold">
-      <strong>Premium (Teacher & Pro)</strong><br>
-      <small>Unlimited AI • CBC Grid Generator • Parent Reports</small>
-      <p class="price-tag">K150/mo</p>
-      <button style="background: #ffc107; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold;">Upgrade via Airtel/MTN</button>
-    </div>
-  </div>
-
-  <div class="chenjela-card" id="teacher-tools">
-    <h3>Teacher's Scheme of Work Generator</h3>
-    <p>Automatically create Ministry of Education grids.</p>
-    <input type="text" id="subject-input" placeholder="e.g., Mathematics Form 1" style="width: 80%; padding: 10px;">
-    <button onclick="generateScheme()" style="background: #007bff; color: white; border: none; padding: 10px; margin-top: 10px; border-radius: 5px;">Generate Grid</button>
-    
-    <div id="grid-output">
-      </div>
-  </div>
-
-  <script>
-    function generateScheme() {
-      const subject = document.getElementById('subject-input').value;
-      const output = document.getElementById('grid-output');
-      
-      // This is a placeholder for the AI logic
-      output.innerHTML = `
-        <table>
-          <tr><th>Week</th><th>Topic</th><th>Competencies (CBC)</th><th>Assessment</th></tr>
-          <tr><td>1</td><td>${subject} Intro</td><td>Learner identifies core concepts.</td><td>Oral Quiz</td></tr>
-          <tr><td>2</td><td>Development</td><td>Learner applies theory to practice.</td><td>Grid Task</td></tr>
-        </table>
-        <p style="color: green; font-size: 12px;">✔ Formatted for Zambian School Standards</p>
-      `;
-    }
-  </script>
-
+    <script src="app.js"></script>
 </body>
 </html>
