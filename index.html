@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chenjela - Study Smart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; font-family: 'Outfit', sans-serif; background: #0a0f1e; color: white; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+        header { padding: 20px; text-align: center; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { font-size: 24px; font-weight: 700; color: #f5b400; }
+        
+        #chat-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .message { padding: 12px 16px; border-radius: 15px; max-width: 80%; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
+        .assistant { background: #1a2b4a; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .user { background: #f5b400; color: #0a0f1e; align-self: flex-end; border-bottom-right-radius: 2px; font-weight: 500; }
+
+        .input-area { padding: 20px; display: flex; gap: 10px; background: #0d162d; border-top: 1px solid rgba(255,255,255,0.1); }
+        input { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #2a5298; background: #1a2b4a; color: white; outline: none; }
+        button.send { background: #f5b400; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; color: #0a0f1e; }
+        
+        @media (max-width: 600px) { .message { max-width: 90%; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">Chenjela.</div>
+        <div style="font-size: 12px; color: #8899bb;">Zambian CBC Study Assistant</div>
+    </header>
+
+    <div id="chat-container">
+        <div class="message assistant">
+            Muli bwanji! I am Chenjela. Ask me anything about your school subjects!
+        </div>
+    </div>
+
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type your message...">
+        <button class="send" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('userInput');
+
+        function sendMessage() {
+            const text = userInput.value.trim();
+            if (text !== "") {
+                // 1. Create User Message Bubble
+                const userDiv = document.createElement('div');
+                userDiv.className = 'message user';
+                userDiv.textContent = text;
+                chatContainer.appendChild(userDiv);
+
+                // 2. Clear Input
+                userInput.value = "";
+
+                // 3. Scroll to bottom
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+
+                // 4. Fake "Assistant" typing response (for now)
+                setTimeout(() => {
+                    const botDiv = document.createElement('div');
+                    botDiv.className = 'message assistant';
+                    botDiv.textContent = "I'm processing that... (Connect an API to get real answers!)";
+                    chatContainer.appendChild(botDiv);
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }, 1000);
+            }
+        }
+
+        // Allow pressing "Enter" to send
+        userInput.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        });
+    </script>
+
+</body>
+</html>
