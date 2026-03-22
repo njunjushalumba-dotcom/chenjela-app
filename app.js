@@ -1,7 +1,6 @@
 // --- THE KEY MANAGER ---
 let API_KEY = localStorage.getItem('chenjela_key');
 
-// Force reset if the user adds ?reset=true to the URL
 if (window.location.search.includes('reset=true')) {
     localStorage.removeItem('chenjela_key');
     API_KEY = null;
@@ -14,6 +13,12 @@ if (!API_KEY) {
     }
 }
 
+// --- NAVIGATION LOGIC ---
+function showPage(pageId) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+    document.getElementById(pageId).classList.add('active-page');
+}
+
 // --- THE AI ENGINE ---
 async function askAI() {
     const inputField = document.getElementById('userInput');
@@ -22,11 +27,11 @@ async function askAI() {
 
     if (!userInput) return;
     if (!API_KEY) {
-        alert("Please refresh and enter your key.");
+        alert("Enter your key first!");
         return;
     }
 
-    responseArea.innerHTML = "Consulting the syllabus... 🇿🇲";
+    responseArea.innerHTML = "Consulting the Zambian CBC Syllabus... 🇿🇲";
 
     try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
@@ -37,7 +42,7 @@ async function askAI() {
             body: JSON.stringify({
                 contents: [{ 
                     parts: [{ 
-                        text: `You are Teacher Chenjela, an expert Zambian educator. Answer using the Zambian CBC syllabus (Grade 10-12 or Form 1-4). Use Kwacha for money examples and local Zambian context. User asks: ${userInput}` 
+                        text: `Context: Zambian Teacher Assistant. Use Grade 10-12 old syllabus and Form 1-4 CBC. Mention Zambian locations/Kwacha. User: ${userInput}` 
                     }] 
                 }]
             })
@@ -46,11 +51,7 @@ async function askAI() {
         const data = await response.json();
 
         if (data.error) {
-            responseArea.innerHTML = "⚠️ Error: " + data.error.message;
-            if(data.error.message.includes("API_KEY_INVALID")) {
-                localStorage.removeItem('chenjela_key');
-                responseArea.innerHTML += "<br>Invalid Key. Refresh to try again.";
-            }
+            responseArea.innerHTML = "⚠️ API Error. Please check your key.";
         } else {
             const aiText = data.candidates[0].content.parts[0].text;
             responseArea.innerHTML = aiText.replace(/\n/g, '<br>');
@@ -58,7 +59,9 @@ async function askAI() {
         }
 
     } catch (error) {
-        responseArea.innerHTML = "⚠️ Connection failed. Check your network or API key.";
-        console.error(error);
+        responseArea.innerHTML = "⚠️ Connection error. Check your signal.";
     }
 }
+
+// Connect the main Send button
+document.getElementById('sendBtn').onclick = askAI;
