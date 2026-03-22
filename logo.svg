@@ -1,0 +1,40 @@
+<svg width="400" height="400" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle -->
+  <circle cx="200" cy="200" r="190" fill="#0d1f3c" stroke="#f5b400" stroke-width="4"/>
+  <!-- Inner decorative ring -->
+  <circle cx="200" cy="200" r="170" fill="none" stroke="#f5b400" stroke-width="1" stroke-dasharray="8 4" opacity="0.4"/>
+  <!-- Left page -->
+  <path d="M130 200 Q130 140 190 135 L190 255 Q130 250 130 200 Z" fill="#1a3a6e" stroke="#f5b400" stroke-width="2"/>
+  <!-- Right page -->
+  <path d="M270 200 Q270 140 210 135 L210 255 Q270 250 270 200 Z" fill="#1a3a6e" stroke="#f5b400" stroke-width="2"/>
+  <!-- Book spine -->
+  <rect x="196" y="135" width="8" height="120" fill="#f5b400" rx="2"/>
+  <!-- Lines on left page -->
+  <line x1="145" y1="165" x2="188" y2="162" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <line x1="145" y1="180" x2="188" y2="177" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <line x1="145" y1="195" x2="188" y2="192" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <line x1="145" y1="210" x2="188" y2="207" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <line x1="145" y1="225" x2="188" y2="222" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <!-- Lines on right page -->
+  <line x1="212" y1="162" x2="255" y2="165" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <line x1="212" y1="177" x2="255" y2="180" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <line x1="212" y1="192" x2="255" y2="195" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <line x1="212" y1="207" x2="255" y2="210" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <line x1="212" y1="222" x2="255" y2="225" stroke="#f5b400" stroke-width="1.5" opacity="0.6"/>
+  <!-- AI Badge -->
+  <circle cx="242" cy="162" r="14" fill="#f5b400"/>
+  <text x="242" y="167" text-anchor="middle" fill="#0a0f1e" font-size="12" font-weight="bold" font-family="Georgia, serif">AI</text>
+  <!-- Brand Name - FULL WORD in one text element -->
+  <text x="200" y="290" text-anchor="middle" font-size="48" font-weight="bold" font-family="Georgia, serif" letter-spacing="2">
+    <tspan fill="white">Chenj</tspan><tspan fill="#f5b400">ela</tspan>
+  </text>
+  <!-- Tagline -->
+  <text x="200" y="315" text-anchor="middle" fill="#8899bb" font-size="13" font-family="Georgia, serif" letter-spacing="4">STUDY SMART</text>
+  <!-- Zambian flag colours bar -->
+  <rect x="120" y="328" width="30" height="6" fill="#198a00" rx="3"/>
+  <rect x="155" y="328" width="30" height="6" fill="#de2010" rx="3"/>
+  <rect x="190" y="328" width="30" height="6" fill="#000000" rx="3"/>
+  <rect x="225" y="328" width="30" height="6" fill="#ef7d00" rx="3"/>
+  <!-- Made in Zambia -->
+  <text x="200" y="355" text-anchor="middle" fill="#445566" font-size="11" font-family="Georgia, serif" letter-spacing="2">MADE IN ZAMBIA</text>
+</svg>
