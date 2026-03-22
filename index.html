@@ -4,26 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chenjela AI 🇿🇲</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #003366; color: white; font-family: sans-serif; margin: 0; padding-bottom: 60px; }
+        .nav-bar { background: #002244; padding: 10px; display: flex; justify-content: space-around; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #FFD700; }
+        .nav-item { color: #FFD700; text-decoration: none; font-size: 14px; font-weight: bold; cursor: pointer; }
+        .page { display: none; padding: 20px; text-align: center; }
+        .active-page { display: block; }
+        #chat-container { background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; min-height: 250px; margin: 20px auto; width: 90%; overflow-y: auto; text-align: left; }
+        input { width: 80%; padding: 12px; border-radius: 5px; border: none; font-size: 16px; }
+        button { background: #FFD700; color: #003366; padding: 12px 25px; border: none; border-radius: 5px; font-weight: bold; margin-top: 10px; width: 85%; cursor: pointer; }
+        .price-card { background: white; color: #333; margin: 10px; padding: 15px; border-radius: 10px; border-left: 5px solid #FFD700; }
+    </style>
 </head>
-<body style="background-color: #003366; color: white; font-family: sans-serif; text-align: center; padding: 20px;">
+<body>
 
-    <h1 style="color: #FFD700;">Teacher Chenjela</h1>
-    <p>Zambian CBC Syllabus Assistant</p>
-
-    <div id="chat-container" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; min-height: 200px; margin-bottom: 20px;">
-        <div id="responseArea">Ask Teacher Chenjela anything about lesson plans or the syllabus...</div>
+    <div class="nav-bar">
+        <span class="nav-item" onclick="showPage('home')">AI ASSIST</span>
+        <span class="nav-item" onclick="showPage('syllabus')">SYLLABUS</span>
+        <span class="nav-item" onclick="showPage('pricing')">UPGRADE</span>
     </div>
 
-    <input type="text" id="userInput" placeholder="e.g. Grade 10 Math lesson plan..." style="width: 80%; padding: 10px; border-radius: 5px; border: none;">
-    <br><br>
-    <button onclick="askAI()" style="background: #FFD700; color: #003366; padding: 15px 30px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Send Question</button>
-
-    <div style="text-align: center; font-size: 10px; color: #ccc; margin-top: 40px; padding: 10px; border-top: 1px solid #555;">
-        <p>© 2026 Chenjela Education Hub. <br>
-        Developed in Zambia. Payments are non-refundable.</p>
+    <div id="home" class="page active-page">
+        <h1 style="color: #FFD700;">Teacher Chenjela</h1>
+        <p>Zambian CBC Expert (Grade 10-12)</p>
+        <div id="chat-container">
+            <div id="responseArea">Welcome! Ask about lesson plans, schemes of work, or CBC topics.</div>
+        </div>
+        <input type="text" id="userInput" placeholder="Ask anything...">
+        <button id="sendBtn">Send Question</button>
     </div>
 
-    <script src="app.js?v=2"></script>
+    <div id="syllabus" class="page">
+        <h2 style="color: #FFD700;">CBC Syllabus Guide</h2>
+        <div style="text-align: left; background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
+            <p>✅ <b>Grade 10-12:</b> Old Syllabus focus.</p>
+            <p>✅ <b>Form 1-4:</b> New CBC Curriculum focus.</p>
+            <hr>
+            <p>Accessing these documents requires a <b>Standard</b> or <b>Premium</b> account.</p>
+        </div>
+        <button onclick="showPage('pricing')">Unlock Syllabus Access</button>
+    </div>
+
+    <div id="pricing" class="page">
+        <h2 style="color: #FFD700;">Membership Tiers</h2>
+        
+        <div class="price-card">
+            <h3>Basic (Free)</h3>
+            <p>5 AI Questions per day.</p>
+        </div>
+
+        <div class="price-card" style="background: #fff9e6;">
+            <h3>Standard (K150/mo)</h3>
+            <p>Unlimited AI + Lesson Plan Templates.</p>
+            <button style="width: 100%;" onclick="alert('Pay K150 to Airtel/MTN: 09XXXXXXXX')">Pay K150 via MoMo</button>
+        </div>
+
+        <div class="price-card">
+            <h3>Premium (K300/mo)</h3>
+            <p>Full Access for Teachers & Parents.</p>
+            <button style="width: 100%;">Pay K300 via MoMo</button>
+        </div>
+    </div>
+
+    <script src="app.js?v=3"></script>
 </body>
 </html>
