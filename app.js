@@ -22,13 +22,12 @@ function showPage(pageId) {
 // --- ACTIVATION CODE SYSTEM ---
 function checkCode() {
     const code = prompt("Enter your 6-digit Activation Code:");
-    // YOUR SECRET CODE:
     if (code === "CJ2026") { 
         localStorage.setItem('user_tier', 'premium');
         alert("Success! Premium Membership Activated.");
         location.reload();
     } else {
-        alert("Invalid code. Please pay K150 and send proof to Precious.");
+        alert("Invalid code. Please pay K150 to Precious Shalumba.");
     }
 }
 
@@ -43,7 +42,8 @@ async function askAI() {
     responseArea.innerHTML = "Teacher Chenjela is thinking... 🇿🇲";
 
     try {
-        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
+        // FIXED URL BELOW
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${API_KEY}`;
         
         const response = await fetch(url, {
             method: 'POST',
@@ -51,7 +51,7 @@ async function askAI() {
             body: JSON.stringify({
                 contents: [{ 
                     parts: [{ 
-                        text: `Role: Expert Zambian Teacher. Context: Use Zambian CBC (Form 1-4) and Grade 10-12 syllabus. Use local examples (Kwacha, Zambian towns, local crops). User Query: ${userInput}` 
+                        text: `Role: Expert Zambian Teacher. Context: Use Zambian CBC (Form 1-4) and Grade 10-12 syllabus. Use local examples (Kwacha, Zambian towns). User: ${userInput}` 
                     }] 
                 }]
             })
@@ -60,7 +60,7 @@ async function askAI() {
         const data = await response.json();
 
         if (data.error) {
-            responseArea.innerHTML = "⚠️ Error: " + data.error.message;
+            responseArea.innerHTML = "⚠️ API Error: " + data.error.message;
         } else {
             const aiText = data.candidates[0].content.parts[0].text;
             responseArea.innerHTML = aiText.replace(/\n/g, '<br>');
@@ -68,7 +68,7 @@ async function askAI() {
         }
 
     } catch (error) {
-        responseArea.innerHTML = "⚠️ Connection failed. Please try again.";
+        responseArea.innerHTML = "⚠️ Connection failed. Check your data.";
     }
 }
 
