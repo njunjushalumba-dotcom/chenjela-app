@@ -172,6 +172,57 @@
         list.innerHTML = saved.length ? saved.map(i => `<div class="stat-card"><strong>Q: ${i.q}</strong><p style="font-size:13px">${i.a}</p></div>`).join('') : "No lessons saved.";
     }
 </script>
+  <style>
+    .chenjela-card { background: white; padding: 20px; border-radius: 12px; margin: 15px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+    .price-tag { font-size: 24px; color: #28a745; font-weight: bold; }
+    .tier-box { border: 2px solid #eee; padding: 15px; border-radius: 10px; margin-bottom: 10px; }
+    .premium-gold { border-color: #ffc107; background-color: #fffdf5; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #f8f9fa; }
+  </style>
+
+  <div class="chenjela-card">
+    <h2>Choose Your Plan</h2>
+    <div class="tier-box">
+      <strong>Basic (Free)</strong><br>
+      <small>5 Questions/Day • Old Syllabus</small>
+      <p class="price-tag">K0</p>
+    </div>
+    <div class="tier-box premium-gold">
+      <strong>Premium (Teacher & Pro)</strong><br>
+      <small>Unlimited AI • CBC Grid Generator • Parent Reports</small>
+      <p class="price-tag">K150/mo</p>
+      <button style="background: #ffc107; border: none; padding: 10px; width: 100%; border-radius: 5px; font-weight: bold;">Upgrade via Airtel/MTN</button>
+    </div>
+  </div>
+
+  <div class="chenjela-card" id="teacher-tools">
+    <h3>Teacher's Scheme of Work Generator</h3>
+    <p>Automatically create Ministry of Education grids.</p>
+    <input type="text" id="subject-input" placeholder="e.g., Mathematics Form 1" style="width: 80%; padding: 10px;">
+    <button onclick="generateScheme()" style="background: #007bff; color: white; border: none; padding: 10px; margin-top: 10px; border-radius: 5px;">Generate Grid</button>
+    
+    <div id="grid-output">
+      </div>
+  </div>
+
+  <script>
+    function generateScheme() {
+      const subject = document.getElementById('subject-input').value;
+      const output = document.getElementById('grid-output');
+      
+      // This is a placeholder for the AI logic
+      output.innerHTML = `
+        <table>
+          <tr><th>Week</th><th>Topic</th><th>Competencies (CBC)</th><th>Assessment</th></tr>
+          <tr><td>1</td><td>${subject} Intro</td><td>Learner identifies core concepts.</td><td>Oral Quiz</td></tr>
+          <tr><td>2</td><td>Development</td><td>Learner applies theory to practice.</td><td>Grid Task</td></tr>
+        </table>
+        <p style="color: green; font-size: 12px;">✔ Formatted for Zambian School Standards</p>
+      `;
+    }
+  </script>
 
 </body>
 </html>
