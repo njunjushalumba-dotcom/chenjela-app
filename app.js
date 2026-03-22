@@ -1,3 +1,25 @@
+// --- THE ZAMBIAN CONTEXT CONFIGURATION ---
+const ZAMBIAN_CONTEXT = {
+  currency: "Zambian Kwacha (K)",
+  location: "Zambia",
+  syllabuses: {
+    senior: "ECZ Senior Secondary (Grades 10-12)",
+    cbc: "Zambian National Competency-Based Curriculum (Forms 1-4)"
+  },
+  localExamples: [
+    "Use Victoria Falls for geography",
+    "Use the Copperbelt for economy and mining topics",
+    "Use local markets like Soweto or Chisokone for math word problems"
+  ]
+};
+
+// This function "injects" the Zambian context into every AI request
+function getZambianPrompt(userPrompt) {
+  return `Context: You are a teacher in ${ZAMBIAN_CONTEXT.location}. 
+  All currency must be in ${ZAMBIAN_CONTEXT.currency}. 
+  Follow the ${ZAMBIAN_CONTEXT.syllabuses.cbc} for junior levels. 
+  Task: ${userPrompt}`;
+}
 // This connects to the Secret Key you saved in GitHub
 const API_KEY = process.env.AI_API_KEY; 
 
