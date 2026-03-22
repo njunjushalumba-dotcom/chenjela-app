@@ -2,76 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Chenjela - Zambia's #1 Study Hub</title>
-    
-    <link rel="icon" href="logo.svg">
-    <link rel="apple-touch-icon" href="logo.svg">
-    <link rel="manifest" href="manifest.json">
-
-    <style>
-        :root { --gold: #f5b400; --dark-bg: #0a0f1e; --card-bg: #1a2b4a; }
-        body { margin: 0; font-family: 'Outfit', sans-serif; background: var(--dark-bg); color: white; padding: 10px; line-height: 1.6; }
-        
-        header { text-align: center; padding: 20px 10px; border-bottom: 2px solid var(--gold); margin-bottom: 20px; }
-        .logo-text { font-size: 28px; font-weight: bold; color: var(--gold); margin: 0; }
-        
-        .chenjela-card { background: var(--card-bg); padding: 20px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #2a3e5a; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        h3 { color: var(--gold); margin-top: 0; font-size: 20px; }
-
-        input { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #415a77; background: #0d1b2a; color: white; box-sizing: border-box; font-size: 16px; margin-bottom: 10px; }
-        button { width: 100%; padding: 15px; border-radius: 8px; border: none; font-weight: bold; font-size: 16px; cursor: pointer; }
-        
-        .btn-primary { background: var(--gold); color: var(--dark-bg); }
-        .btn-whatsapp { background: #25D366; color: white; margin-top: 10px; display: block; text-decoration: none; text-align: center; line-height: 1.2; }
-
-        .tier { border: 1px solid #415a77; padding: 15px; border-radius: 10px; margin-top: 15px; background: rgba(255,255,255,0.05); text-align: center; }
-        .price { font-size: 26px; font-weight: bold; color: #4ade80; margin: 5px 0; }
-        #responseArea { margin-top: 15px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 8px; min-height: 50px; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chenjela AI 🇿🇲</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body style="background-color: #003366; color: white; font-family: sans-serif; text-align: center; padding: 20px;">
 
-    <header>
-        <p class="logo-text">Chenjela.</p>
-        <small>Zambian CBC & O-Level Hub</small>
-    </header>
+    <h1 style="color: #FFD700;">Teacher Chenjela</h1>
+    <p>Zambian CBC Syllabus Assistant</p>
 
-    <div class="chenjela-card">
-        <h3>Ask Teacher Chenjela 🇿🇲</h3>
-        <input type="text" id="userInput" placeholder="Ex: Solve 2x + 5 = 15 in Kwacha...">
-        <button class="btn-primary" onclick="askAI()">Send Question</button>
-        <div id="responseArea">Answers will appear here...</div>
+    <div id="chat-container" style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px; min-height: 200px; margin-bottom: 20px;">
+        <div id="responseArea">Ask Teacher Chenjela anything about lesson plans or the syllabus...</div>
     </div>
 
-    <div class="chenjela-card" style="border-left: 5px solid #3a86ff;">
-        <h3>Teacher's Grid (CBC)</h3>
-        <p style="font-size: 14px;">Generate Schemes of Work instantly.</p>
-        <input type="text" id="topicInput" placeholder="Topic (e.g. Integers Form 1)">
-        <button onclick="generateGrid()" style="background: #3a86ff; color: white;">Generate Grid</button>
+    <input type="text" id="userInput" placeholder="e.g. Grade 10 Math lesson plan..." style="width: 80%; padding: 10px; border-radius: 5px; border: none;">
+    <br><br>
+    <button onclick="askAI()" style="background: #FFD700; color: #003366; padding: 15px 30px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">Send Question</button>
+
+    <div style="text-align: center; font-size: 10px; color: #ccc; margin-top: 40px; padding: 10px; border-top: 1px solid #555;">
+        <p>© 2026 Chenjela Education Hub. <br>
+        Developed in Zambia. Payments are non-refundable.</p>
     </div>
 
-    <div class="chenjela-card">
-        <h3>Choose Your Plan</h3>
-        
-        <div class="tier">
-            <strong>Basic Student</strong>
-            <p class="price">K0</p>
-            <small>5 Questions/Day • Old Syllabus</small>
-        </div>
-
-        <div class="tier" style="border: 2px solid var(--gold);">
-            <strong>Premium (Teacher & Pro)</strong>
-            <p class="price">K150/mo</p>
-            <small>Unlimited AI • CBC Grid Generator • Parent Reports</small>
-            <a href="https://wa.me/260971234567?text=Hi!%20I%20want%20to%20activate%20Chenjela%20Premium" class="btn-whatsapp" style="border-radius: 8px; padding: 15px;">
-                Pay via Mobile Money
-            </a>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
+    <script src="app.js?v=2"></script>
 </body>
-</html>    <script src="app.js?v=1"></script> </body>
 </html>
-
