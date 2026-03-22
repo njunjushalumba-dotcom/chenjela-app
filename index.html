@@ -3,80 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chenjela - Study Smart</title>
+    <title>Chenjela - Zambia's #1 Study Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body { margin: 0; font-family: 'Outfit', sans-serif; background: #0a0f1e; color: white; display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
-        header { padding: 20px; text-align: center; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { font-size: 24px; font-weight: 700; color: #f5b400; }
+        header { padding: 15px; text-align: center; background: rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .logo { font-size: 26px; font-weight: 700; color: #f5b400; }
         
-        #chat-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
-        .message { padding: 12px 16px; border-radius: 15px; max-width: 80%; font-size: 14px; line-height: 1.5; word-wrap: break-word; }
-        .assistant { background: #1a2b4a; align-self: flex-start; border-bottom-left-radius: 2px; }
-        .user { background: #f5b400; color: #0a0f1e; align-self: flex-end; border-bottom-right-radius: 2px; font-weight: 500; }
+        /* Navigation & Mode Bars */
+        .sub-nav { display: flex; overflow-x: auto; padding: 10px; gap: 8px; background: #0d162d; scrollbar-width: none; }
+        .sub-nav::-webkit-scrollbar { display: none; }
+        .pill { background: #1a2b4a; border: 1px solid #2a5298; color: white; padding: 6px 14px; border-radius: 20px; font-size: 11px; white-space: nowrap; cursor: pointer; }
+        .pill.active { background: #f5b400; color: #0a0f1e; border: none; font-weight: 600; }
 
-        .input-area { padding: 20px; display: flex; gap: 10px; background: #0d162d; border-top: 1px solid rgba(255,255,255,0.1); }
+        /* Chat Window */
+        #chat-container { flex: 1; padding: 20px; overflow-y: auto; display: flex; flex-direction: column; gap: 15px; }
+        .message { padding: 12px 16px; border-radius: 15px; max-width: 80%; font-size: 14px; line-height: 1.5; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .assistant { background: #1a2b4a; align-self: flex-start; border-bottom-left-radius: 2px; }
+        .user { background: #f5b400; color: #0a0f1e; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+        /* Bottom Input Area */
+        .input-area { padding: 15px; display: flex; gap: 10px; background: #0d162d; border-top: 1px solid rgba(255,255,255,0.1); }
         input { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid #2a5298; background: #1a2b4a; color: white; outline: none; }
-        button.send { background: #f5b400; border: none; padding: 10px 20px; border-radius: 10px; font-weight: 600; cursor: pointer; color: #0a0f1e; }
-        
-        @media (max-width: 600px) { .message { max-width: 90%; } }
+        button.send { background: #f5b400; border: none; padding: 0 20px; border-radius: 10px; font-weight: 600; cursor: pointer; color: #0a0f1e; }
     </style>
 </head>
 <body>
 
     <header>
         <div class="logo">Chenjela.</div>
-        <div style="font-size: 12px; color: #8899bb;">Zambian CBC Study Assistant</div>
+        <div id="current-mode" style="font-size: 11px; color: #8899bb; margin-top: 5px;">Student Mode: Form 1-4 (CBC)</div>
     </header>
+
+    <div class="sub-nav">
+        <div class="pill active">Student (CBC)</div>
+        <div class="pill">Student (Old G10-12)</div>
+        <div class="pill">Teacher Portal</div>
+        <div class="pill">Parent Portal</div>
+    </div>
+
+    <div class="sub-nav" style="background: #111a33; border-bottom: 1px solid rgba(255,255,255,0.05);">
+        <div class="pill">Maths</div>
+        <div class="pill">Science</div>
+        <div class="pill">Literature</div>
+        <div class="pill">Civic Education</div>
+        <div class="pill">ICT</div>
+        <div class="pill">Agric Science</div>
+        <div class="pill">RE</div>
+        <div class="pill">Music</div>
+        <div class="pill">Home Economics</div>
+        <div class="pill">Entrepreneurship</div>
+    </div>
 
     <div id="chat-container">
         <div class="message assistant">
-            Muli bwanji! I am Chenjela. Ask me anything about your school subjects!
+            Muli bwanji! I am your Chenjela assistant. Select a subject above or type your question below.
         </div>
     </div>
 
     <div class="input-area">
-        <input type="text" id="userInput" placeholder="Type your message...">
+        <input type="text" id="userInput" placeholder="Ask a question...">
         <button class="send" onclick="sendMessage()">Send</button>
     </div>
 
     <script>
-        const chatContainer = document.getElementById('chat-container');
-        const userInput = document.getElementById('userInput');
-
         function sendMessage() {
-            const text = userInput.value.trim();
-            if (text !== "") {
-                // 1. Create User Message Bubble
-                const userDiv = document.createElement('div');
-                userDiv.className = 'message user';
-                userDiv.textContent = text;
-                chatContainer.appendChild(userDiv);
-
-                // 2. Clear Input
-                userInput.value = "";
-
-                // 3. Scroll to bottom
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-
-                // 4. Fake "Assistant" typing response (for now)
+            const input = document.getElementById('userInput');
+            const container = document.getElementById('chat-container');
+            if (input.value.trim() !== "") {
+                const userMsg = document.createElement('div');
+                userMsg.className = 'message user';
+                userMsg.textContent = input.value;
+                container.appendChild(userMsg);
+                input.value = "";
+                container.scrollTop = container.scrollHeight;
+                
                 setTimeout(() => {
-                    const botDiv = document.createElement('div');
-                    botDiv.className = 'message assistant';
-                    botDiv.textContent = "I'm processing that... (Connect an API to get real answers!)";
-                    chatContainer.appendChild(botDiv);
-                    chatContainer.scrollTop = chatContainer.scrollHeight;
-                }, 1000);
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'message assistant';
+                    botMsg.textContent = "I am ready to help with that! In our next update, I will be linked to the full Zambian syllabus for this subject.";
+                    container.appendChild(botMsg);
+                    container.scrollTop = container.scrollHeight;
+                }, 800);
             }
         }
-
-        // Allow pressing "Enter" to send
-        userInput.addEventListener("keypress", function(event) {
-            if (event.key === "Enter") {
-                sendMessage();
-            }
-        });
     </script>
-
 </body>
 </html>
