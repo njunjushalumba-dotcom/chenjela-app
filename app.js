@@ -1,62 +1,49 @@
-// --- THE ZAMBIAN CONTEXT CONFIGURATION ---
+// 1. ZAMBIAN TEACHER CONFIGURATION
 const ZAMBIAN_CONTEXT = {
-  currency: "Zambian Kwacha (K)",
-  location: "Zambia",
-  syllabuses: {
-    senior: "ECZ Senior Secondary (Grades 10-12)",
-    cbc: "Zambian National Competency-Based Curriculum (Forms 1-4)"
-  },
-  localExamples: [
-    "Use Victoria Falls for geography",
-    "Use the Copperbelt for economy and mining topics",
-    "Use local markets like Soweto or Chisokone for math word problems"
-  ]
+    currency: "Zambian Kwacha (K)",
+    syllabuses: {
+        senior: "ECZ Senior Secondary (Grades 10-12)",
+        cbc: "Zambian National Competency-Based Curriculum (Forms 1-4)"
+    }
 };
 
-// This function "injects" the Zambian context into every AI request
-function getZambianPrompt(userPrompt) {
-  return `Context: You are a teacher in ${ZAMBIAN_CONTEXT.location}. 
-  All currency must be in ${ZAMBIAN_CONTEXT.currency}. 
-  Follow the ${ZAMBIAN_CONTEXT.syllabuses.cbc} for junior levels. 
-  Task: ${userPrompt}`;
-}
-// This connects to the Secret Key you saved in GitHub
-const API_KEY = process.env.AI_API_KEY; 
+// 2. THE AI FUNCTION (Ask Teacher Chenjela)
+async function askAI() {
+    const input = document.getElementById('userInput').value;
+    const responseArea = document.getElementById('responseArea');
+    
+    if (!input) return alert("Please enter a question!");
+    
+    responseArea.innerHTML = "Thinking like a Zambian teacher... 🇿🇲";
 
-// --- 1. THE TEACHER'S LESSON PLAN GENERATOR ---
-function generateLessonPlan(subject, grade, topic) {
-  const prompt = `Act as a Zambian Senior Teacher. Create a Scheme of Work grid for ${subject}, ${grade}, Topic: ${topic}. 
-  Include columns for: Week, Topic, Competencies (CBC style), Teaching Method, and Assessment. 
-  Ensure it aligns with the Ministry of Education standards.`;
-  
-  return callAI(prompt);
-}
+    // This is where the magic happens - it tells the AI to stay Zambian
+    const finalPrompt = `Context: You are a Zambian teacher. Use ${ZAMBIAN_CONTEXT.currency}. 
+    Follow ${ZAMBIAN_CONTEXT.syllabuses.cbc}. Question: ${input}`;
 
-// --- 2. THE STUDENT'S SYLLABUS TUTOR ---
-function startTutorSession(userGrade, studentQuestion) {
-  let syllabusType = userGrade.includes("Form") ? "New CBC Curriculum" : "Old Senior Syllabus";
-  
-  const prompt = `You are a Tutor for a ${userGrade} student in Zambia using the ${syllabusType}. 
-  Answer this question simply: ${studentQuestion}. 
-  If it's Grade 12, focus on Exam Prep. If it's CBC, focus on practical skills.`;
-
-  return callAI(prompt);
+    try {
+        // This is a placeholder for your Google Gemini connection
+        // We will add your API key here once you are ready
+        responseArea.innerHTML = "Success! (AI Connection is ready to be activated with your key).";
+    } catch (error) {
+        responseArea.innerHTML = "Oh no! Something went wrong. Check your internet.";
+    }
 }
 
-// --- 3. THE SUBSCRIPTION CHECKER ---
-function checkAccess(userTier) {
-  if (userTier === "Basic") {
-    return "Limit: 5 AI questions per day. Grade 10-12 only.";
-  } else if (userTier === "Standard") {
-    return "Limit: 50 AI questions. Full CBC Access + Parent Reports.";
-  } else {
-    return "Unlimited Access + Teacher Lesson Plan Exporting.";
-  }
-}
+// 3. TEACHER'S GRID GENERATOR
+function generateGrid() {
+    const topic = document.getElementById('topicInput').value;
+    const responseArea = document.getElementById('responseArea');
+    
+    if (!topic) return alert("Enter a topic for the grid!");
 
-// (Technical function that sends the prompt to the AI)
-async function callAI(text) {
-  // This part connects your button to the AI key
-  console.log("Connecting to AI with your secure key...");
-  // ... connection logic goes here ...
+    let gridHTML = `<h4>CBC Scheme for: ${topic}</h4>
+    <table border="1" style="width:100%; border-collapse: collapse; font-size: 12px;">
+        <tr style="background: #f5b400; color: #0a0f1e;">
+            <th>Week</th><th>Topic</th><th>Competency</th>
+        </tr>
+        <tr><td>1-2</td><td>${topic}</td><td>Student explains ${topic} in local context</td></tr>
+        <tr><td>3-4</td><td>Application</td><td>Applying ${topic} to Zambian industry</td></tr>
+    </table>`;
+    
+    responseArea.innerHTML = gridHTML;
 }
